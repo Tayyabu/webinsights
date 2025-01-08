@@ -1,0 +1,26 @@
+---
+
+
+import MainLayout from "../layouts/MainLayout.astro";
+
+import { getEntry } from "astro:content";
+
+
+const article = await getEntry("about", "about-page");
+const {Content} = await article.render()
+---
+
+
+<MainLayout>
+<div class="prose">
+    <h1 class="text-4xl font-bold mb-2 p-5">{article.data.title}</h1>
+    <div class=" prose-xl text-wrap ">
+        <Content />
+      </div>
+</div>
+
+
+
+   
+  
+</MainLayout>

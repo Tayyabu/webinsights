@@ -1,0 +1,37 @@
+---
+import ArticleCard from "../../components/ArticleCard.astro";
+import Pagination from "../../components/Pagination.astro";
+import { ARTICLES_PER_PAGE } from "../../constants";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const currentPage = +(Astro.url.searchParams.get("page") as string) || 1;
+
+const articles: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const totalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE) ;
+
+const articlesInthisPage = articles.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE
+);
+---
+
+<MainLayout>
+  <section class="container mx-auto max-w-screen-xl mt-10 px-8">
+    <h1 class="text-2xl pb-3">All Articles</h1>
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {articlesInthisPage.map((article) => <ArticleCard article={article} />)}
+    </div>
+
+    <Pagination
+      disablePrevious={currentPage === 1}
+      disableNext={currentPage >= totalPages}
+      currentPage={currentPage}
+      totalPages={totalPages}
+    />
+  </section>
+</MainLayout>

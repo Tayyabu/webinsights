@@ -1,0 +1,96 @@
+---
+import Navbar from "../components/Navbar.astro";
+
+import { ViewTransitions } from "astro:transitions";
+
+const {title="Web Insights"}=Astro.props
+type Props ={
+  title?:string
+}
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+   
+    <script
+    is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.js"
+      integrity="sha512-BJ/5sR2hFxQTKin/55JQCcMTObShDBAmVjL/3NR/MVcrhyOazJjAgvROem03+HYyGw16SVdSfoWCFGr9syxAKA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script>
+    <ViewTransitions />
+    <title>{title}</title>
+  </head>
+  <body >
+    <Navbar />
+
+    <section class="container mx-auto max-w-screen-xl mt-10 px-8">
+      <slot />
+    </section>
+
+    <footer class="bg-indigo-900 text-white">
+      <div class="container mx-auto mt-10 max-w-screen-xl px-8">
+        <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="mt-10">
+            <h3 class="text-xl font-semibold mb-4">About</h3>
+            <p class="text-white text-sm">
+              WebInsights is a blog for tech enthusiasts. We publish articles,
+              stories and tutorials about web related content.
+            </p>
+          </div>
+          <div class="mt-10">
+            <h3 class="text-xl font-semibold mb-4">Categories</h3>
+            <ul class="text-white text-sm">
+              <li class="mb-2">
+                <a href="#">Tech</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Programming</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Gadgets</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Hardware</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Software</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">VR</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Smartphones</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Cameras</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Drones</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-10">
+            <h3 class="text-xl font-semibold mb-4">Contact</h3>
+            <ul class="text-white text-sm">
+              <li class="mb-2">
+                <a href="https://www.linkedin.com/in/muhammad-tayyab-81b7b5305/edit/forms/project/new/?profileFormEntryPoint=PROFILE_COMPLETION_HUB">LinkedIn</a>
+              </li>
+              <li class="mb-2">
+                <a href="https://www.facebook.com/profile.php?id=61555593482409">Facebook</a>
+              </li>
+              <li class="mb-2">
+                <a href="#">Instagram</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer></body
+  >
+</html>

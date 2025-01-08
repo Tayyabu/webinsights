@@ -1,0 +1,40 @@
+---
+
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+
+import ArticleCard from "../../../components/ArticleCard.astro";
+import { capitalize } from "../../../utils";
+const { tag } = Astro.params;
+
+if(tag === undefined) {
+  throw new Error('Tagtag is required');
+}
+export const getStaticPaths = (async () => {
+  
+  const articles = await getCollection("blog");
+  
+  const tags = articles.map((article) => article.data.tags);
+  const allTags = Array.from(new Set(tags.flat()));
+
+  return allTags && allTags.map((tag) => ({
+    params: {
+      tag: tag,
+    },
+  })) ;
+}) ;
+
+const articles = await getCollection("blog");
+export const prerender = true;
+const allPosts = articles.filter(post => post.data.tags.map(tag=>tag.toLowerCase()).includes(tag.toLowerCase()))
+
+---
+
+<MainLayout>
+  <section class="container mx-auto max-w-screen-xl mt-10 px-8">
+    <h1 class="text-2xl pb-3">All Articles with Tag :<b>{capitalize(tag)}</b></h1>
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {allPosts.map(article=><ArticleCard article={article}/>)}
+  </section>
+</MainLayout>
