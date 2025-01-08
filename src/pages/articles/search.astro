@@ -3,15 +3,15 @@ import ArticleCard from "../../components/ArticleCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 
-const query: string | null = Astro.url.searchParams.get("query");
+const query= Astro.url.searchParams.get("query");
 const allBlogPosts = await getCollection("blog");
 function searchResult() {
   return allBlogPosts.filter((post) => {
     const matchTitle = post.data.title
       .toLowerCase()
-      .includes(query!.toLowerCase());
-    const matchBody = post.body.toLowerCase().includes(query!.toLowerCase());
-    const matchSlug = post.slug.toLowerCase().includes(query!.toLowerCase());
+      .includes((query || "").toLowerCase());
+    const matchBody = post.body.toLowerCase().includes((query || "").toLowerCase());
+    const matchSlug = post.slug.toLowerCase().includes((query || "").toLowerCase());
     return matchTitle || matchBody || matchSlug;
   });
 
